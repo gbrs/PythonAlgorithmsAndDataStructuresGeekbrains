@@ -2,22 +2,22 @@
 Количество элементов (n) вводится с клавиатуры.
 '''
 
+
 # рекурсивный вариант
 
-def recursion(sum_, n):
+def uroboros(sum_, n):
     if n < 2:
         sum_ = 1
     else:
-        sum_ = recursion(sum_, n - 1) + 1 / (-2) ** (n - 1)
+        sum_ = uroboros(sum_, n - 1) + 1 / (-2) ** (n - 1)
     return sum_
-
 
 
 n = int(input("Введите количество элементов ряда: "))
 
 sum_ = 0
 
-print(recursion(sum_, n))
+print(uroboros(sum_, n))
 
 
 

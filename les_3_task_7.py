@@ -23,4 +23,4 @@ for i in range(2, len(a)):
         else:
             min2 = a[i]
 
-print(min1, min2)
+print("Два минимальныхзначения в списке: ", min1, min2)

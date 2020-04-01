@@ -1,10 +1,8 @@
-''' Найти максимальный элемент среди минимальных элементов столбцов матрицы
+''' 3.9. Найти максимальный элемент среди минимальных элементов столбцов матрицы
 '''
 
 
 from random import randrange
-from timeit import timeit
-import cProfile
 
 # сгенерирую случайную матрицу 5 строк на 10 столбцов
 a = [[randrange(0, 100) for j in range(10)] for i in range(5)]
@@ -25,4 +23,3 @@ for j in range(len(a[0])):
         mx = mn
 
 print(mx)
-print(timeit())

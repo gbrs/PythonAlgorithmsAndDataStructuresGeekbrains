@@ -7,6 +7,8 @@
 import cProfile
 
 def adder(sum_, n):
+    '''рекурсивно суммирует элементы последовательности
+    '''
     if n < 2:
         sum_ += 1
     else:
@@ -14,6 +16,8 @@ def adder(sum_, n):
     return sum_
 
 def divider(n):
+    '''создает очередной элемент последовательности
+    '''
     if n < 2:
         mosq = 1
     else:

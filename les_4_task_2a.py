@@ -7,6 +7,10 @@
 import cProfile
 
 def prime_seeker_cycle(number_prime):
+    '''определение простоты числа путём последовательного деления
+    на предыдущие числа
+    '''
+
     cnt_prime = 1
     date = 2
     while cnt_prime < number_prime:
@@ -18,14 +22,15 @@ def prime_seeker_cycle(number_prime):
             cnt_prime += 1
     return date
 
-'''
+
+''' отключенный ввод-вывод программы
 number_prime = int(input("Какое по счету простое число вы хотите найти? "))
 print(prime_seeker_cycle(number_prime))
 '''
 
-# cProfile.run('prime_seeker_cycle(5000)')
+cProfile.run('prime_seeker_cycle(5000)')
 
-# 96 - 503, 1000 - 7919, 5000 - 48611
+# Проверка: 96 - 503, 1000 - 7919, 5000 - 48611
 
 
 '''
@@ -48,6 +53,8 @@ print(prime_seeker_cycle(number_prime))
         1    7.490    7.490    7.490    7.490 les_4_task_2a.py:9(prime_seeker_cycle)
         1    0.000    0.000    7.490    7.490 {built-in method builtins.exec}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        
+Сложность алгоритма, видимо, O(n^2)
 '''
 
 

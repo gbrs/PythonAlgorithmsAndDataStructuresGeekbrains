@@ -5,17 +5,51 @@
 '''
 
 import cProfile
-from math import ceil
+from math import ceil  # округление вверх
+
+
+def main(number_prime, Sieve_size, start, cnt_prime):
+    '''основное тело программы, спрятанное в функцию
+    '''
+
+    # последовательно достраиваем решето Эратосфена
+    # пока не найдем достаточно простых чисел
+    while cnt_prime < number_prime:
+        stop = start + Sieve_size
+        erat(start, stop)
+        cnt_prime += sieve[start:stop].count(True)
+        start += Sieve_size
+
+    # поиск нужного по счёту простого числа (от конца к началу).
+    # Не нашёл нужный встроенный метод для списков
+    i = stop
+    while cnt_prime >= number_prime:
+        i -= 1
+        if sieve[i]:
+            cnt_prime -= 1
+    else:
+        return i
+
 
 def erat(start, stop):
-    for k in range(Sieve_size):  # TODO должен быть способ проще
+    '''строит решето Эратосфена для элементов от start до stop
+    '''
+
+    # достраиваю к решету Sieve_size элементов True.
+    # Наверняка можно было и без цикла решить, но "нешмогла"
+    for k in range(Sieve_size):
         sieve.append(True)
+
+    # заполнение Falseами первой части решета.
+    # Не смог придумать как не выделять этот случай
     if start == 0:
         sieve[0] = sieve[1] = False
         for k in range(2, stop // 2):
             if sieve[k]:
                 for j in range(2 * k, stop, k):
                     sieve[j] = False
+
+    # заполнение Falseами всех остальных частей решета
     else:
         for k in range(2, stop // 2):
             if sieve[k]:
@@ -23,40 +57,51 @@ def erat(start, stop):
                     sieve[j] = False
 
 
+# Решето; размер блоков, которыми последовательно достраиваем решето;
+# начало очередного блока; счетчик найденных простых чисел.
+# Как переменные делать глобальными? Всё пришлось передать "ручками" в функцию main
 sieve = []
 Sieve_size = 1000
 start = 0
 cnt_prime = 0
 
+''' отключенная часть программы: ввод и вывод
 number_prime = int(input("Какое по счету простое число вы хотите найти? "))
+print(main(number_prime, Sieve_size, start, cnt_prime))
+'''
 
-while cnt_prime < number_prime:
-    stop = start + Sieve_size
-    erat(start, stop)
-    # for i in range(start, stop):
-    #     if sieve[i]:
-    #         print(i, end=' ')
-    # print()
-    cnt_prime += sieve[start:stop].count(True)  # TODO [start:stop]
-    start += Sieve_size
+cProfile.run('main(5000, 1000, 0, 0)')
 
-i = stop
-while cnt_prime >= number_prime:
-    i -= 1
-    if sieve[i]:
-        cnt_prime -= 1
-else:
-    print('\n',  i)
-
-# cProfile.run('prime_seeker_cycle(5000)')
-
-# 96 - 503, 1000 - 7919, 5000 - 48611
+# Проверка: 96 - 503, 1000 - 7919, 5000 - 48611
 
 
 '''
 -----АНАЛИЗ-----
 
+"les_4_task_2b.main(10, 1000, 0, 0)"
+10 loops, best of 5: 735 usec per loop
 
+"import les_4_task_2b" "les_4_task_2b.main(100, 1000, 0, 0)"
+10 loops, best of 5: 625 usec per loop
+
+"les_4_task_2b.main(1000, 1000, 0, 0)"
+10 loops, best of 5: 9.52 msec per loop
+
+"les_4_task_2b.main(5000, 1000, 0, 0)"
+10 loops, best of 5: 190 msec per loop
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.233    0.233 <string>:1(<module>)
+        1    0.001    0.001    0.233    0.233 les_4_task_2b.py:11(main)
+       49    0.177    0.004    0.231    0.005 les_4_task_2b.py:34(erat)
+        1    0.000    0.000    0.233    0.233 {built-in method builtins.exec}
+    71800    0.047    0.000    0.047    0.000 {built-in method math.ceil}
+    49000    0.006    0.000    0.006    0.000 {method 'append' of 'list' objects}
+       49    0.001    0.000    0.001    0.000 {method 'count' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        
+Сложность оценить не могу. "Гугл говорит, что" сложность "эратосфена" - n*log(log n)
+Данное решение намного быстрее предыдущего "переборного" решения через цикл.
 '''
 
-# python -m timeit -n 10 -s "import les_4_task_2a" "les_4_task_2a.prime_seeker_cycle(10)"
+# python -m timeit -n 10 -s "import les_4_task_2b" "les_4_task_2b.main(10, 1000, 0, 0)"

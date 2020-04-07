@@ -6,8 +6,7 @@
 
 from collections import namedtuple
 
-# соберем все данные по каждому предприятию в namedtuple
-# и сложим их в список lst
+
 factory = namedtuple('factory', 'name, I, II, III, IV, Y')
 lst = []
 n = 3
@@ -23,6 +22,8 @@ for i in range(n):
     print(lst[i])
 '''
 
+# соберем все данные по каждому предприятию в namedtuple
+# и сложим их в список lst
 for i in range(n):
     name = input(f'Введите название предприятия №{i+1} ')
     I = float(input(f'Введите прибыль в первом квартале предприятия №{i+1} '))

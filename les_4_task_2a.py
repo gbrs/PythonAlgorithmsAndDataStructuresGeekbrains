@@ -54,7 +54,8 @@ cProfile.run('prime_seeker_cycle(5000)')
         1    0.000    0.000    7.490    7.490 {built-in method builtins.exec}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
         
-Сложность алгоритма, видимо, O(n^2)
+Сложность алгоритма, видимо, O(n^2).
+Мой плохонький компьютер был совсем не рад 5000-му элементу 10 раз подряд.
 '''
 
 

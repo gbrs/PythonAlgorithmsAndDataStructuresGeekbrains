@@ -59,7 +59,9 @@ def erat(start, stop):
 
 # Решето; размер блоков, которыми последовательно достраиваем решето;
 # начало очередного блока; счетчик найденных простых чисел.
-# Как переменные делать глобальными? Всё пришлось передать "ручками" в функцию main
+''' Как переменные делать глобальными? Пайтон ругается на неопреленность переменных внутри функции
+даже после global ... Поэтому всё передал "ручками" в функцию main. А erat не ругался ни на что...
+'''
 sieve = []
 Sieve_size = 1000
 start = 0
@@ -77,18 +79,7 @@ cProfile.run('main(5000, 1000, 0, 0)')
 
 '''
 -----АНАЛИЗ-----
-
-"les_4_task_2b.main(10, 1000, 0, 0)"
-10 loops, best of 5: 735 usec per loop
-
-"import les_4_task_2b" "les_4_task_2b.main(100, 1000, 0, 0)"
-10 loops, best of 5: 625 usec per loop
-
-"les_4_task_2b.main(1000, 1000, 0, 0)"
-10 loops, best of 5: 9.52 msec per loop
-
-"les_4_task_2b.main(5000, 1000, 0, 0)"
-10 loops, best of 5: 190 msec per loop
+ 
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
         1    0.000    0.000    0.233    0.233 <string>:1(<module>)

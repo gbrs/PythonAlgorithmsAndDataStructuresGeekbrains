@@ -1,28 +1,33 @@
-''' Найти максимальный элемент среди минимальных элементов столбцов матрицы
+'''4. Найти сумму n элементов следующего ряда чисел: 1, -0.5, 0.25, -0.125,…
+Количество элементов (n) вводится с клавиатуры.
 '''
 
 
-from random import randrange
-from timeit import timeit
+# рекурсивный вариант
+
 import cProfile
 
-# сгенерирую случайную матрицу 5 строк на 10 столбцов
-a = [[randrange(0, 100) for j in range(10)] for i in range(5)]
+def uroboros(sum_, n):
+    if n < 2:
+        sum_ = 1
+    else:
+        sum_ = uroboros(sum_, n - 1) + 1 / (-2) ** (n - 1)
+    return sum_
 
-# Распечатываю получившуюся 'матрицу'
-for i in range(5):
-    for j in range(10):
-        print(a[i][j], end="\t")
-    print()
 
-# вложенные циклы: поиск максимума(поиск минимума)
-for j in range(len(a[0])):
-    for i in range(len(a)):
-        if i == 0 or a[i][j] < mn:
-            mn = a[i][j]
-    print(mn, end="\t")  # DELETE
-    if j == 0 or mn > mx:
-        mx = mn
+n = 900
 
-print(mx)
-print(timeit())
+sum_ = 0
+
+cProfile.run('uroboros(0, 900)')
+
+# print(uroboros(sum_, n))
+
+
+
+'''Стадия 1. Программа не работает: не понимаю почему...
+Стадия 2. Программа работает: не понимаю почему...
+'''
+
+# python3 -m timeit -n 10 -s "import Пробы" "Пробы.uroboros(0, 10)"
+# python3 -m timeit -n 100 -s "import Пробы" "Пробы.uroboros(0, 900)"

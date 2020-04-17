@@ -3,14 +3,15 @@
 Найдите в массиве медиану.
 '''
 
-from random import randint
+from random import shuffle
 
 
-m = 10
-# удачный пример a = [32, 42, 20, 10, 0, 19, 85, 54, 27]
-a = [randint(0, 100) for i in range(2*m + 1)]
+m = 5
+# удачный пример работы a = [32, 42, 20, 10, 0, 19, 85, 54, 27]
+a = list(range(2*m + 1))
+shuffle(a)
 print(a)
-# для визуального нахождения медианы для контроля print(sorted(a))
+# print(sorted(a))  # для визуального нахождения медианы для контроля
 
 left = -101
 right = 101
@@ -35,4 +36,6 @@ for i in range(2*m + 1):
             left = a[i]
         elif top < down and a[i] < right:
             right = a[i]
-        # для пояснения механизма работы  print(left, right)
+        # print(left, right)  # для пояснения механизма работы
+
+# программа не доработана: не учитывает случай, когда в списке несколько медианных значений left != right

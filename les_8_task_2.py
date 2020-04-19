@@ -5,6 +5,7 @@
 
 import collections
 
+
 def dijkstra(start, finish, matrix):
     '''
     алгоритм Дейкстры, возвращающий список расстояний до всех вершин от вершины start

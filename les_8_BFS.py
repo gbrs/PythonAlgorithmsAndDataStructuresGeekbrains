@@ -2,30 +2,43 @@ import collections
 
 
 def breadth_first_search(graph, start, finish):
-    '''находит кратчайший путь из start в stop'''
+    '''
+    находит кратчайший путь из start в stop.
+    Поиск в ширину. От start находим первый слой ее соседок.
+    Для последних находим их соседок (второй слой). И т.д.
+    '''
 
+    # список,в котором для каждой вершины записан её сосед сверху, ближайший к start;
+    # список уже просмотренных вершин;
+    # список вершин, которые предстоит обойти
     parents = [None for _ in range(len(graph))]
-    is_visited = [False for _ in range(len(graph))]
-    is_visited[start] = True
+    is_visited = [False for _ in range(len(graph))]; is_visited[start] = True
+    must_see = collections.deque([start])
 
-    deq = collections.deque([start])
+    # В цикле while обрабатываем элементы из списка must_see.
+    # Бежим по строке текущей вершины в матрице смежности,
+    # находя и отмечая её соседей (в которых еще не бывали) и пополняя ими список must_see.
+    # Если список must_see опустел, а мы так и не дошли до finish,
+    # значит такого пути нет.
+    while must_see:
 
-    while deq:  # пока не пустой
+        current_vertex = must_see.pop()
 
-        curent_vertex = deq.pop()
-
-        if curent_vertex == finish:
-            # return parents
+        if current_vertex == finish:
             break
 
-        for i, neighbour in enumerate(graph[curent_vertex]):
+        for i, neighbour in enumerate(graph[current_vertex]):
             if neighbour == 1 and not is_visited[i]:
                 is_visited[i] = True
-                parents[i] = curent_vertex
-                deq.appendleft(i)
+                parents[i] = current_vertex
+                must_see.appendleft(i)
     else:
         return f'Из вершины {start} нельзя попасть в вершину {finish}'
 
+    # Теперь описываем путь с самым коротким distance,
+    # пользуясь тем, что соседом сверху для каждой вершины
+    # записана та из соседок, которая наиболее близка к start.
+    # Бежим к соседу сверху, от него к его соседу сверху и т.д.
     distance = 0
     way_to_finish = collections.deque([finish])
     i = finish

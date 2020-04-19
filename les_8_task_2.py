@@ -8,6 +8,7 @@ import collections
 def dijkstra(start, finish, matrix):
     '''
     алгоритм Дейкстры, возвращающий список расстояний до всех вершин от вершины start
+    и путь от start до finish
     '''
 
     # создаем списки: distances - расстояний от start до всех остальных,
@@ -46,6 +47,11 @@ def dijkstra(start, finish, matrix):
                 min_dist = distances[i]
                 min_vertex = i
 
+    # Теперь очередью описываем самый короткий путь от start до finish,
+    # пользуясь тем, что parent для каждой вершины -
+    # та из соседок, которая наиболее близка к start.
+    # Бежим к родителю, от него к его родителю и т.д.
+    # Но сначала обрабатываем случай, когда finish - несвязная вершина
     if not parents[finish]:
         return distances, 'oops'
     way_to_finish = collections.deque([finish])
@@ -83,7 +89,6 @@ f = int(input('До какой вершины двигаемся? '))
 d, w = dijkstra(s, f, g)
 
 print(f'Список расстояний от вершины {s} до всех вершин: {d}')
-
 if w == 'oops':
     print(f'Пути из вершины {s} в вершину {f} не существует')
 else:

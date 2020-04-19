@@ -10,7 +10,7 @@ def breadth_first_search(graph, start, finish):
 
     # список,в котором для каждой вершины записан её сосед сверху, ближайший к start;
     # список уже просмотренных вершин;
-    # список вершин, которые предстоит обойти
+    # очередь (FIFO) вершин, которые предстоит обойти
     parents = [None for _ in range(len(graph))]
     is_visited = [False for _ in range(len(graph))]; is_visited[start] = True
     must_see = collections.deque([start])
@@ -35,10 +35,10 @@ def breadth_first_search(graph, start, finish):
     else:
         return f'Из вершины {start} нельзя попасть в вершину {finish}'
 
-    # Теперь описываем путь с самым коротким distance,
-    # пользуясь тем, что соседом сверху для каждой вершины
+    # Теперь очередью описываем путь с самым коротким distance,
+    # пользуясь тем, что родителем для каждой вершины
     # записана та из соседок, которая наиболее близка к start.
-    # Бежим к соседу сверху, от него к его соседу сверху и т.д.
+    # Бежим к родителю, от него к родителю родителя и т.д.
     distance = 0
     way_to_finish = collections.deque([finish])
     i = finish
